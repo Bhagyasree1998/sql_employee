@@ -1,0 +1,71 @@
+mysql> create database employee;
+Query OK, 1 row affected (0.12 sec)
+
+mysql> use employee;
+Database changed
+
+mysql> create table employee(eid int primary key,ename varchar(30),emob bigint u
+nique,empdob date not null,esal float,check(esal>0));
+Query OK, 0 rows affected (2.69 sec)
+
+mysql> desc employee;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| eid    | int         | NO   | PRI | NULL    |       |
+| ename  | varchar(30) | YES  |     | NULL    |       |
+| emob   | bigint      | YES  | UNI | NULL    |       |
+| empdob | date        | NO   |     | NULL    |       |
+| esal   | float       | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.06 sec)
+
+mysql> insert into employee values(11,'rk',959595,'1994-03-29',50000),(21,'bs',9
+79752,'1998-04-17',40000),(31,'kk',898989,'1997-08-27',30000),(41,'sk',689565,'1
+995-07-12',20000),(51,'tk',255689,'1990-03-14',10000);
+Query OK, 5 rows affected (0.18 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from employee;
++-----+-------+--------+------------+-------+
+| eid | ename | emob   | empdob     | esal  |
++-----+-------+--------+------------+-------+
+|  11 | rk    | 959595 | 1994-03-29 | 50000 |
+|  21 | bs    | 979752 | 1998-04-17 | 40000 |
+|  31 | kk    | 898989 | 1997-08-27 | 30000 |
+|  41 | sk    | 689565 | 1995-07-12 | 20000 |
+|  51 | tk    | 255689 | 1990-03-14 | 10000 |
++-----+-------+--------+------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table permanant_employee(eid int,noofhours float,position varchar(
+30),foreign key(eid) references employee(eid));
+Query OK, 0 rows affected (2.65 sec)
+
+mysql> desc permanant_employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| eid       | int         | YES  | MUL | NULL    |       |
+| noofhours | float       | YES  |     | NULL    |       |
+| position  | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.04 sec)
+
+mysql> insert into permanant_employee values(11,48,'software engineer'),(21,58,'
+software developer'),(41,60,'consultant'),
+    -> (51,45,'analyst');
+Query OK, 4 rows affected (0.44 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from permanant_employee;
++------+-----------+--------------------+
+| eid  | noofhours | position           |
++------+-----------+--------------------+
+|   11 |        48 | software engineer  |
+|   21 |        58 | software developer |
+|   41 |        60 | consultant         |
+|   51 |        45 | analyst            |
++------+-----------+--------------------+
+4 rows in set (0.00 sec)
